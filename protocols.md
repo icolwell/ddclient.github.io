@@ -65,6 +65,69 @@ Example ddclient.conf file entries:
 
 ChangeIP is supported since [r150] based on a patch submitted by Michele Giorato in [e85661ad]
 
+# Cloudflare
+
+There are two ways to allow ddclient access to your Cloudflare DNS records.
+You can use [API Tokens](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) or your [Global API Key](https://developers.cloudflare.com/fundamentals/api/get-started/keys/).
+Cloudflare suggests using API tokens since Global API keys are now considered a "legacy" approach.
+
+NOTE: Make sure you are running the latest version of ddclient! Older versions only supported Global API keys.
+
+## Using API Tokens
+
+First [create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token) via your Cloudflare profile page.  
+Make sure the token has the following permissions:
+- Zone - DNS - Edit
+- Zone - Zone - Read
+
+and the following resources:
+- Include - All zones
+
+Applicable configuration variables:
+configuration                       | information
+------------------------------------|-------------
+protocol=cloudflare                 |
+server=api.cloudflare.com/client/v4 | Only necessary if you previously set `server` in your config file for some other protocol
+zone={example.com}                  | The [cloudflare zone](https://developers.cloudflare.com/fundamentals/setup/accounts-and-zones/#zones)
+login=token                         | The login method should always be set to `token` when using API tokens
+password={your-api-token}           | The API token, typically 40 characters in length
+{example.com}                       | The domain you are trying to update
+
+Example ddclient.conf file entries:
+
+    ## CloudFlare API Token (www.cloudflare.com)
+    protocol=cloudflare
+    zone=example.com
+    login=token
+    password=your-token-here-its-40-characters-long
+    example.com, blog.example.com
+
+
+For reference: [Cloudflare's docs on dynamic DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/)
+
+## Using Global API Keys
+
+First get your [global API key](https://developers.cloudflare.com/fundamentals/api/get-started/keys/) from your Cloudflare profile page.
+
+Applicable configuration variables:
+configuration                       | information
+------------------------------------|-------------
+protocol=cloudflare                 |
+server=api.cloudflare.com/client/v4 | Only necessary if you previously set `server` in your config file for some other protocol
+zone={example.com}                  | The [cloudflare zone](https://developers.cloudflare.com/fundamentals/setup/accounts-and-zones/#zones)
+login={your-cloudflare-email}       | The email address associated with your Cloudflare account (what you would use to login to cloudflare)
+password={your-global-api-key}      | The global API key
+{example.com}                       | The domain you are trying to update
+
+Example ddclient.conf file entries:
+
+    ## CloudFlare Global API Key (www.cloudflare.com)
+    protocol=cloudflare
+    zone=example.com
+    login=youremail@gmail.com
+    password=your-global-api-key-here
+    example.com, blog.example.com
+
 # dnspark
 
 The `dnspark` protocol is used by DNS service offered by www.dnspark.com. According to [bugs:#54] you have to use ssl and set the server to www.dnspark.org to get it working but that bug isn't confirmed yet. A possible fix for it can be found on [bugs:#36].
