@@ -73,6 +73,8 @@ Cloudflare suggests using API tokens since Global API keys are now considered a 
 
 NOTE: Make sure you are running the latest version of ddclient! Older versions only supported Global API keys.
 
+For reference: [Cloudflare's docs on dynamic DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/)
+
 ## Using API Tokens
 
 First [create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token) via your Cloudflare profile page.  
@@ -102,8 +104,6 @@ Example ddclient.conf file entries:
     password=your-token-here-its-40-characters-long
     example.com, blog.example.com
 
-
-For reference: [Cloudflare's docs on dynamic DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/)
 
 ## Using Global API Keys
 
